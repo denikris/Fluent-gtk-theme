@@ -3,11 +3,11 @@
  * Base States *
  ***************/
 .background {
-  background-color: rgba($background, 1);
+  background-color: $background;
   color: $text;
 
   &.csd { // Set csd windows botttom border radius
-    border-radius: 0 0 $window-radius $window-radius;
+    border-radius: $window-radius;
   }
 
   &.maximized, &.tiled, &.fullscreen, &.solid-csd { // No radius when windows maximized
@@ -421,11 +421,16 @@ treeview entry {
   &:checked:disabled { color: on(dark, disabled); }
 }
 
-%button-basic {
-  border: 1px solid $divider;
+button {
+  min-height: 24px;
+  min-width: 16px;
+  padding: ($medium-size - 26px) / 2 ($medium-size - 18px) / 2;
+  border-radius: $corner-radius;
+  font-weight: 500;
+  border: 1px solid $border;
   @include button(normal);
 
-  &:focus { @include button(focus); }
+  &:focus, &:checked:focus { @include button(focus); }
 
   &:hover { @include button(hover); }
 
@@ -438,15 +443,6 @@ treeview entry {
   &:checked:hover { @include button(checked-hover); }
 
   &:checked:disabled { @include button(checked-disabled); }
-}
-
-button {
-  min-height: 24px;
-  min-width: 16px;
-  padding: ($medium-size - 26px) / 2 ($medium-size - 18px) / 2;
-  border-radius: $corner-radius;
-  font-weight: 500;
-  @extend %button-basic;
 
   &:drop(active) { @include button(hover); }
 
@@ -454,7 +450,7 @@ button {
     @at-root %button-flat-simple, & {
       @include button(flat-normal);
 
-      &:focus { @include button(flat-focus); }
+      &:focus, &:checked:focus { @include button(flat-focus); }
 
       &:hover { @include button(flat-hover); }
 
@@ -506,6 +502,16 @@ button {
     }
 
     image:not(:only-child) { margin: 0 (24px - 16px) / 2; }
+  }
+
+  .linked > &:not(:only-child) {
+    &:focus {
+      @include button(normal);
+    }
+
+    &:checked:focus {
+      @include button(checked);
+    }
   }
 
   .linked:not(.vertical) > & {
@@ -1015,10 +1021,10 @@ combobox {
     }
   }
 
-  button.combo cellview {
-    &:dir(ltr) { margin-left: 8px - ($medium-size - 16px) / 2; }
-    &:dir(rtl) { margin-right: 8px - ($medium-size - 16px) / 2; }
-  }
+  // button.combo cellview {
+  //   &:dir(ltr) { margin-left: 8px - ($medium-size - 16px) / 2; }
+  //   &:dir(rtl) { margin-right: 8px - ($medium-size - 16px) / 2; }
+  // }
 
   &.linked {
     button:nth-child(2) {
@@ -1034,30 +1040,30 @@ combobox {
   }
 
   > .linked:not(.vertical) > entry:not(:only-child) {
-    border-radius: $corner-radius;
+    // border-radius: $corner-radius;
     border-right-width: 1px;
 
-    &:first-child {
-      margin-right: -$medium-size;
-      padding-right: $medium-size;
-    }
-
-    &:last-child {
-      margin-left: -$medium-size;
-      padding-left: $medium-size;
-    }
+    // &:first-child {
+    //   margin-right: -$medium-size;
+    //   padding-right: $medium-size;
+    // }
+    //
+    // &:last-child {
+    //   margin-left: -$medium-size;
+    //   padding-left: $medium-size;
+    // }
   }
 
-  > .linked:not(.vertical) > button:not(:only-child) {
-    @extend %button-flat;
-    // @extend %small-button;
-
-    min-height: 16px;
-    min-width: 16px;
-    margin: ($medium-size - $small-size) / 2;
-    padding: ($small-size - 16px) / 2;
-    border-radius: $corner-radius;
-  }
+  // > .linked:not(.vertical) > button:not(:only-child) {
+  //   @extend %button-flat;
+  //   // @extend %small-button;
+  //
+  //   min-height: 16px;
+  //   min-width: 16px;
+  //   margin: ($medium-size - $small-size) / 2;
+  //   padding: ($small-size - 16px) / 2;
+  //   border-radius: $corner-radius;
+  // }
 }
 
 // the combo is a composite widget so the way we do button linking doesn't
@@ -1069,6 +1075,14 @@ combobox {
     border-radius: 0;
     border-left-width: 0;
     border-right-width: 0;
+
+    &:focus {
+      @include button(normal);
+    }
+
+    &:checked:focus {
+      @include button(checked);
+    }
   }
 
   &:first-child > box > button.combo {
@@ -1252,7 +1266,7 @@ searchbar > revealer > box {
   &:hover { box-shadow: 0 2px 3px rgba(black, 0.08), inset 0 0 0 1px $titlebar-divider; }
 
   &:focus {
-    box-shadow: inset 0 0 0 2px $highlight;
+    box-shadow: inset 0 0 0 2px $entry-highlight;
   }
 
   &:disabled {
@@ -1275,8 +1289,12 @@ searchbar > revealer > box {
   box-shadow: inset 0 -1px $divider;
   color: $titlebar-text;
 
-  @if $opacity == 'solid' {
-    background-color: rgba($titlebar, 1);
+  @if $outline == 'true' and $topbar == 'dark' and $variant == 'light' {
+    box-shadow: inset 0 -1px $divider, inset 0 1px highlight($titlebar);
+  }
+
+  @if $opacity == 'solid' or $blur == 'true' {
+    background-color: $titlebar;
   } @else {
     background-color: rgba($titlebar, 0.98);
   }
@@ -1430,8 +1448,11 @@ searchbar > revealer > box {
     background-color: $titlebar;
     min-height: $small-size;
     padding: $container-padding;
-    box-shadow: none;
     border-radius: $corner-radius $corner-radius 0 0;
+
+    @if $outline == 'true' and $topbar == 'dark' and $variant == 'light' {
+      box-shadow: inset 0 1px highlight($titlebar);
+    } @else { box-shadow: none; }
 
     &:backdrop {
       background-color: $titlebar-backdrop;
@@ -1791,12 +1812,17 @@ popover.menu {
 
   & > arrow,
   &.background > contents {
-    padding: $container-padding;
-    box-shadow: inset 0 1px highlight($surface), $shadow-z6;
-    background-color: $surface;
+    padding: $container-padding * 1.5;
+    background-color: $menu;
     background-clip: border-box;
     border: none; // axes borders in a composited env
     border-radius: $menu-radius;
+
+    @if $outline == 'false' {
+      box-shadow: $shadow-z6;
+    } @else {
+      box-shadow: $shadow-z6, 0 0 0 1px if($variant == 'light', rgba(black, 0.06), rgba(white, 0.2));
+    }
   }
 
   &.background separator {
@@ -1835,12 +1861,6 @@ popover.menu {
   }
 }
 
-menuitem {
-  accelerator { color: $text-secondary; }
-
-  &:disabled accelerator { color: $text-secondary-disabled; }
-}
-
 
 /************
  * Popovers *
@@ -1855,9 +1875,9 @@ popover.background {
   > arrow,
   > contents {
     transition: $transition-shadow;
-    padding: 2px;
+    padding: $container-padding * 1.5;
     box-shadow: $shadow-z6; // TODO: this should really have a highlight
-    background-color: $surface;
+    background-color: $menu;
     border-style: solid;
     border-width: 0;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.0) rgba(0, 0, 0, 0.0);
@@ -1945,7 +1965,7 @@ magnifier {
  * Notebooks *
  *************/
 
-$tab-radius: 2px;
+$tab-radius: $corner-radius;
 
 %tabs_tab {
   transition: $transition,
@@ -2228,10 +2248,10 @@ scrollbar {
   // slider
   > range > trough > slider {
     transition: background-color $duration $ease-out;
-    min-width: $container-padding + 4px;
-    min-height: $container-padding + 4px;
+    min-width: if($window == 'round', $container-padding, ($container-padding + 4px));
+    min-height: if($window == 'round', $container-padding, ($container-padding + 4px));
     border: none;
-    border-radius: 0;
+    border-radius: if($window == 'round', $circular_radius, 0);
     background-clip: padding-box;
     background-color: $track;
 
@@ -2269,7 +2289,7 @@ scrollbar {
       > range > trough > slider {
         min-width: 4px;
         min-height: 4px;
-        margin: 3px;
+        margin: if($window == 'round', 0, $container-padding / 2);
         border: 1px solid rgba($base, 0.3);
       }
 
@@ -2667,33 +2687,23 @@ scale {
     &:disabled { background-color: transparent; }
   }
 
-  > trough > slider {
-    transition: background-color $duration $ease-out;
+  slider {
+    transition: background-image $duration $ease-out;
     border-radius: 50%;
     color: $primary;
     background-repeat: no-repeat;
-    background-size: 24px 24px;
+    background-size: 25px 25px;
     background-position: center center;
 
     @each $s, $as in ('', ''),
+                     (':hover', '-hover'),
+                     (':active', '-active'),
                      (':disabled', '-disabled') {
       &#{$s} {
         $_url: 'assets/scale-slider#{$as}#{$asset-suffix}';
 
-        background-image: -gtk-scaled(url('#{$_url}.png'), url('#{$_url}@2.png')),
-                          radial-gradient(circle, transparent 10%, transparent 0%);
+        background-image: -gtk-scaled(url('#{$_url}.png'), url('#{$_url}@2.png'));
       }
-    }
-
-    &:hover { background-color: $overlay-hover; }
-
-    &:focus:hover { background-color: $overlay-focus-hover; }
-
-    &:active {
-      $_url: 'assets/scale-slider#{$asset-suffix}';
-
-      transition: background-color $duration $ease-out;
-      background-color: $overlay-hover;
     }
   }
 
@@ -2970,10 +2980,6 @@ actionbar > revealer > box {
   .background.csd box.vertical > & {
     border-radius: 0 0 $window-radius $window-radius;
   }
-
-  button:not(.suggested-action):not(.destructive-action) { @extend %button-flat; }
-
-  .linked > button:not(.suggested-action):not(.destructive-action) { @extend %button-basic; }
 }
 
 scrolledwindow {
@@ -3870,19 +3876,25 @@ window {
   &.csd {
     transition: $transition-shadow;
     border-radius: $window-radius;
-    box-shadow: $shadow-z16, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent;
+    margin: 0;
 
-    // FIXME rationalize shadows
-
-    // this is used for the resize cursor area
-    margin: 8px;
+    @if $outline == 'false' {
+      box-shadow: $shadow-z16, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent;
+    } @else {
+      box-shadow: $shadow-z16, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent, 0 0 0 1px $divider;
+    }
 
     &:backdrop {
       // the transparent shadow here is to enforce that the shadow extents don't
       // change when we go to backdrop, to prevent jumping windows.
       // The biggest shadow should be in the same order then in the active state
       // or the jumping will happen during the transition.
-      box-shadow: $shadow-z4, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent;
+
+      @if $outline == 'false' {
+        box-shadow: $shadow-z4, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent;
+      } @else {
+        box-shadow: $shadow-z4, 0 16px (24px * .6) 2px transparent, 0 6px (30px * .6) 5px transparent, 0 0 0 1px $divider;
+      }
     }
 
     &.popup {

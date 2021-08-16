@@ -1,8 +1,14 @@
 # Fluent theme
 
-Fluent is a Fluent design theme for GNOME/GTK based desktop environments.
+Fluent is a Fluent design theme for GNOME/GTK based desktop environments. See also [Fluent Icon theme](https://github.com/vinceliuice/Fluent-icon-theme).
 
-![1](screenshot01.png?raw=true)
+### Normal version
+![screenshot01](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/screenshot01.png?raw=true)
+
+### Blur version (Only for Gnome-Shell desktop)
+![screenshot-blur](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/screenshot-blur.jpg?raw=true)
+
+- Blur version requirement [Blur Me](https://extensions.gnome.org/extension/4236/blur-me/)
 
 ## Requirements
 
@@ -30,50 +36,49 @@ Run the following commands in the terminal:
 ```
 -d, --dest DIR          Specify destination directory (Default: /usr/share/themes)
 -n, --name NAME         Specify theme name (Default: Fluent)
--t, --theme VARIANT...  Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|grey|all] (Default: blue)
--c, --color VARIANT...  Specify color variant(s) [standard|light|dark] (Default: All variants)
+-t, --theme VARIANT     Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|grey|all] (Default: blue)
+-c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)
 -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
---tweaks                Specify versions for tweaks [solid|compact] (solid: no transparency variant, compact: no floating panel)
+--tweaks                Specify versions for tweaks [solid|float|round|blur|noborder|square]
+                        solid:    no transparency version
+                        float:    floating panel
+                        round:    rounded windows
+                        blur:     blur version for 'Blur-Me'
+                        noborder: windows and menu with no border
+                        square:   square windows button
 -h, --help              Show help
 ```
 
+![Fluent-view](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/Fluent-view.png?raw=true)
+
 > For more information, run: `./install.sh --help`
 
-> Install different accent color version, run: `./install.sh -t [color name]`
+### Flatpak Installation
 
-```
-./install.sh -t purple # install purple accent color version
+Automatically install your host GTK+ theme as a Flatpak.
 
-./install.sh --tweaks compact # install normal compact gnome-shell panel version (not floating)
-
-./install.sh --tweaks solid # install solid version (not transparency)
-```
+- [pakitheme](https://github.com/refi64/pakitheme)
 
 ### Wallpaper
-[Install Wallpapers](src/wallpaper)
+[Install Wallpapers](https://github.com/vinceliuice/Fluent-gtk-theme/tree/Wallpaper)
 
 #### Preview
-![01](src/wallpaper/wallpaper-1080p/wallpaper-default-flat.png?raw=true)
+![wallpaper](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Wallpaper/wallpaper-1080p/wallpaper-default-flat.png?raw=true)
 
 ### Firefox theme
 [Install Firefox theme](src/firefox)
 
 #### Preview
-![01](src/firefox/preview01.png?raw=true)
-![02](src/firefox/preview02.png?raw=true)
-
-### Dash to dock theme
-[Install dash-to-dock theme](src/dash-to-dock)
-
-#### Screenshot
-![01](src/dash-to-dock/screenshot.png?raw=true)
+![preview01](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/firefox-preview01.jpg?raw=true)
+![preview02](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/firefox-preview02.jpg?raw=true)
 
 ### Fix for Dash to panel
-Go to `src/gnome-shell/extensions/dash-to-panel` [dash-to-panel](src/gnome-shell/extensions/dash-to-panel) run the following commands in the terminal:
+
+Just install the compact version
 
 ```sh
-./install.sh
+./install.sh --tweaks compact
 ```
 
 ## Gtk theme widgets
-![2](screenshot02.png?raw=true)
+![screenshot02](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/screenshot02.png?raw=true)

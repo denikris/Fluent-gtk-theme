@@ -7,6 +7,7 @@
   padding: 0 $container_padding * 2;
   color: $secondary_fg_color;
   text-shadow: none;
+  box-shadow: none;
 
   .message-list-placeholder { spacing: 12px; }
 }
@@ -31,14 +32,24 @@
 
 // message bubbles
 .message {
-  background-color: if($variant == 'light', rgba(black, 0.04), rgba(white, 0.03));
-  border: none;
-  border-radius: $buttons_radius;
+  background-color: $popover_button_bg;
+  border: 1px solid $popover_button_border;
+  border-radius: $menu_radius;
   color: $secondary_fg_color;
   text-shadow: none;
+  box-shadow: 0 3px 8px -2px rgba(black, 0.15);
+  margin: 0 8px 11px 8px;
 
-  &:hover, &:focus { background-color: $divider_color; }
-  &:active { background-color: $track_color; }
+  .popup-menu & {
+    box-shadow: none;
+  }
+
+  &:hover, &:focus {
+    background-color: $popover_button_hover;
+    border-color: if($variant == 'light', rgba(black, 0.15), rgba(white, 0.06));
+  }
+
+  &:active { background-color: $popover_button_active; }
 
   // icon container
   .message-icon-bin {

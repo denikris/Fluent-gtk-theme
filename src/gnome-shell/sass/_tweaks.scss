@@ -1,6 +1,18 @@
 
 // Gnome-shell panel style
-$panel_style: 'float';
+$panel_style: 'compact';
 
-// transparent opacity
+// Transparent opacity
 $opacity: 'default';
+
+// Windows type
+$window: 'default';
+
+// Theme color
+$theme: 'default';
+
+// For Blur-Me
+$blur: 'false';
+
+// Windows outline
+$outline: 'true';

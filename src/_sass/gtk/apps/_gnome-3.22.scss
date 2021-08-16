@@ -7,8 +7,8 @@
     background-color: rgba($base-alt, 0.95);
     border-radius: 0 0 $window-radius $window-radius;
 
-    @if $opacity == 'solid' {
-      background-color: rgba($base-alt, 1);
+    @if $opacity == 'solid' or $blur == 'true' {
+      background-color: $base-alt;
     } @else {
       background-color: rgba($base-alt, 0.95);
     }
@@ -16,12 +16,12 @@
     &.unified { // >= 40.0
       background: none;
 
-      @if $opacity == 'solid' {
+      @if $opacity == 'solid' or $blur == 'true' {
         headerbar.titlebar {
-          background-color: rgba($titlebar, 1);
+          background-color: $titlebar;
         }
         placessidebar.sidebar {
-          background-color: rgba($base-alt, 1);
+          background-color: $base-alt;
         }
       } @else {
         headerbar.titlebar {
@@ -57,7 +57,7 @@
 
       > stack {
         background-color: $base;
-        border-radius: 0 0 $window-radius $window-radius;
+        border-radius: 0 0 $window-radius 0;
       }
 
       scrolledwindow > .view:not(:selected):not(:hover):not(:checked) {
@@ -604,7 +604,7 @@ window.background.csd {
               background-image: image($primary);
               background-position: $container-padding - 2px center;
               background-repeat: no-repeat;
-              background-size: 2px 32px;
+              background-size: 2px 24px;
             }
           }
 
@@ -1454,6 +1454,14 @@ window.background.csd {
 }
 
 
+
+/************
+ * Software *
+ ************/
+button.feature-tile {
+  background-color: $base-alt;
+}
+
 /**************
  * Gnome Disk *
  **************/
@@ -1471,13 +1479,21 @@ window.background.csd {
 /************
  * Terminal *
  ************/
-terminal-window notebook > header > box {
-  // Remove hard-coded margin around button(s)
-  margin: -2px -2px -3px;
+terminal-window {
+  &.background.csd, &.background.csd.maximized {
+    border-radius: 0 0 0 0;
+  }
 
-  button {
-    // margin-bottom: -1px;
-    border-radius: 0;
+  decoration {
+    border-radius: $window-radius $window-radius 0 0;
+  }
+
+  notebook > header > box {
+    padding: 0;
+
+    button {
+      border: none;
+    }
   }
 }
 
@@ -1668,14 +1684,23 @@ preferencesgroup, .geary-accounts-editor-pane {
   scrolledwindow.frame { border: none; }
 }
 
+$geary-topbar: if($variant == 'light' and $topbar == 'dark', rgba($titlebar, $blur_opacity + 0.1), rgba($titlebar, $blur_opacity/3));
+
 .geary-main-window {
   > deck > overlay > .geary-main-layout {
-    background-color: $base;
+    background-color: transparent;
+
+    @if $blur == 'true' {
+      > leaflet > headerbar,
+      > leaflet > leaflet > headerbar {
+        background-color: $geary-topbar;
+      }
+    }
 
     > leaflet > separator.sidebar, // centry
     > leaflet > leaflet > separator.sidebar { // left
       // border-right: none;
-      background-color: $titlebar;
+      background-color: if($blur == 'true', $geary-topbar, $titlebar);
       box-shadow: inset 0 -1px $divider;
       transition: background-color $duration $ease-out,
                   color $duration $ease-out,
@@ -1688,10 +1713,44 @@ preferencesgroup, .geary-accounts-editor-pane {
       background-color: $divider;
     }
 
+    .geary-folder-frame {
+      treeview.sidebar.view:not(:hover):not(:selected) {
+        background-color: transparent;
+        background-image: none;
+      }
+    }
+
     > leaflet > leaflet > box.vertical > .geary-conversation-frame {
       > scrolledwindow {
         margin: -1px 0; // hide .view top border
         // > treeview.view {}
+      }
+    }
+  }
+
+  geary-conversation-viewer#conversation_viewer { // right side
+    list.background.conversation-listbox.content {
+      > row.activatable {
+        border: 1px solid $divider;
+        border-bottom-width: 0;
+        background-color: $base;
+
+        &:first-child {
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+        }
+      }
+
+      .geary-attachment-pane {
+        border-radius: 0 0 8px 8px;
+
+        actionbar.background {
+          background-color: transparent;
+
+          > revealer > box {
+            border-radius: 0 0 6px 6px;
+          }
+        }
       }
     }
   }
@@ -1810,6 +1869,52 @@ dialog.background.csd {
 
     viewport.frame {
       &.view { border-radius: $corner-radius; }
+    }
+  }
+}
+
+//
+// unified window
+//
+
+window.background.csd.unified {
+  // Remove the sheen on headerbar...
+  headerbar {
+    box-shadow: inset 0 -1px $divider;
+
+    &.selection-mode {
+      box-shadow: none;
+    }
+  }
+
+  // ...and add it on the window itself
+  @if $outline == 'true' and $topbar == 'dark' and $variant == 'light' {
+    > decoration-overlay {
+      box-shadow: inset 0 1px highlight($titlebar);
+    }
+  }
+
+  &,
+  > decoration,
+  > decoration-overlay {
+    border-radius: $window-radius;
+  }
+
+  &.tiled,
+  &.tiled-top,
+  &.tiled-right,
+  &.tiled-bottom,
+  &.tiled-left,
+  &.maximized,
+  &.fullscreen {
+    > decoration-overlay {
+      box-shadow: none;
+    }
+
+    &,
+    > decoration,
+    > decoration-overlay {
+      border-radius: 0;
     }
   }
 }
