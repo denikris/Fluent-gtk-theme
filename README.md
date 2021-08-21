@@ -35,10 +35,19 @@ Run the following commands in the terminal:
 
 ```
 -d, --dest DIR          Specify destination directory (Default: /usr/share/themes)
+
 -n, --name NAME         Specify theme name (Default: Fluent)
+
 -t, --theme VARIANT     Specify theme color variant(s) [default|purple|pink|red|orange|yellow|green|grey|all] (Default: blue)
+
 -c, --color VARIANT     Specify color variant(s) [standard|light|dark] (Default: All variants)
+
 -s, --size VARIANT      Specify size variant [standard|compact] (Default: All variants)
+
+-i, --icon VARIANT      Specify icon variant(s) for shell panel
+                        [default|apple|simple|gnome|ubuntu|arch|manjaro|fedora|debian|void|opensuse|popos|mxlinux|zorin]
+                        (Default: Windows icon)
+
 --tweaks                Specify versions for tweaks [solid|float|round|blur|noborder|square]
                         solid:    no transparency version
                         float:    floating panel
@@ -46,10 +55,11 @@ Run the following commands in the terminal:
                         blur:     blur version for 'Blur-Me'
                         noborder: windows and menu with no border
                         square:   square windows button
+
 -h, --help              Show help
 ```
 
-![Fluent-view](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/Fluent-view.png?raw=true)
+![theme-view](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/theme-view.png?raw=true)
 
 > For more information, run: `./install.sh --help`
 
@@ -63,14 +73,13 @@ Automatically install your host GTK+ theme as a Flatpak.
 [Install Wallpapers](https://github.com/vinceliuice/Fluent-gtk-theme/tree/Wallpaper)
 
 #### Preview
-![wallpaper](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Wallpaper/wallpaper-1080p/wallpaper-default-flat.png?raw=true)
+![wallpaper](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/wallpaper-view.png?raw=true)
 
 ### Firefox theme
 [Install Firefox theme](src/firefox)
 
 #### Preview
-![preview01](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/firefox-preview01.jpg?raw=true)
-![preview02](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/firefox-preview02.jpg?raw=true)
+![firefox-view](https://github.com/vinceliuice/Fluent-gtk-theme/blob/Images/firefox-view.png?raw=true)
 
 ### Fix for Dash to panel
 
