@@ -50,7 +50,7 @@ stage {
 
 %osd_button {
   min-height: 24px;
-  padding: $container-padding $container-padding*5;
+  padding: $container-padding $container-padding * 5;
   transition-duration: 100ms;
   border-radius: $corner-radius;
 
@@ -66,7 +66,7 @@ stage {
 // Entries
 //
 %entry {
-  padding: $container-padding/2 $container-padding*2;
+  padding: $container-padding / 2 $container-padding * 2;
   min-height: $small-size;
   caret-size: 1px;
   selection-background-color: $primary;
@@ -86,7 +86,7 @@ stage {
 }
 
 %osd_entry {
-  padding: $container-padding/2 $container-padding*2;
+  padding: $container-padding / 2 $container-padding * 2;
   caret-size: 1px;
   caret-color: on($tooltip);
   selection-background-color: $primary;
@@ -272,7 +272,7 @@ $menu_item_radius: $corner-radius;
 .menu,
 .popup-menu,
 %menu {
-  padding: 0;
+  padding: $container-padding / 2;
   color: $text;
   background-color: $menu_bg;
   border-radius: $window-radius;
@@ -339,7 +339,7 @@ $menu_item_radius: $corner-radius;
 
 .popup-combo-menu {
   @extend %menu;
-  padding: $container-padding*2;
+  padding: $container-padding * 2;
 }
 
 // .popup-image-menu-item {}
@@ -1150,6 +1150,7 @@ $menu_item_radius: $corner-radius;
 .menu {
   &-favorites-box {
     margin: auto;
+    margin-bottom: $container-padding;
     padding: $container-padding;
     transition-duration: 300;
     background-color: rgba($text, 0.05);
@@ -1171,7 +1172,7 @@ $menu_item_radius: $corner-radius;
   &-places {
     &-box {
       margin: auto;
-      padding: $container-padding*1.5;
+      padding: $container-padding * 1.5;
       border: 1px solid rgba(0,0,0,0);
     }
 
@@ -1665,29 +1666,29 @@ $menu_item_radius: $corner-radius;
   &-overlay {
     width: 290px;
     height: 80px;
-    padding: $container-padding*2 $container-padding*3;
+    padding: $container-padding * 2 $container-padding * 3;
     spacing: $container-padding;
-    background-color: on($menu_bg, track);
+    background-color: rgba(black, 0.5);
     border: none;
     border-radius: 0 0 $corner-radius $corner-radius;
-    color: on($menu_bg);
+    color: on(dark);
 
     StButton {
       width: 16px;
       height: 16px;
       padding: 8px;
       margin: 0 $container-padding $container-padding;
-      color: on($menu_bg);
+      color: white;
       border-radius: $circular-radius;
       border: none;
 
       StIcon { icon-size: 16px; }
 
-      &:hover { background-color: rgba(on($tooltip), 0.1); }
-      &:active { background-color: rgba(on($tooltip), 0.25); }
+      &:hover { background-color: rgba(white, 0.1); }
+      &:active { background-color: rgba(white, 0.25); }
       &:insensitive {
         opacty: 0.35;
-        color: rgba(on($tooltip), 0.35);
+        color: rgba(white, 0.35);
       }
     }
 
